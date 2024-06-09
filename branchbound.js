@@ -1,5 +1,5 @@
 
-const datasetPekerja = [
+let datasetPekerja = [
     {
         "nama": "budi",
         "cost": [5000, 10000, 1000, 2000, 6000]
@@ -21,23 +21,82 @@ const datasetPekerja = [
         "cost": [8000, 4000, 7000, 5000, 10000]
     }
 ];
-let treeArray = [];
-let id = 0;
-
-branchbound(datasetPekerja);
-renderView(treeArray);
-function next() {
-    branchboundNext(datasetPekerja);
-    renderView(treeArray);
+function initializeForm() {
+    datasetPekerja.forEach((kandidat, index) => {
+        const kandidatIndex = index + 1;
+        document.getElementById(`candidateName-${kandidatIndex}`).value = kandidat.nama;
+        kandidat.cost.forEach((gaji, gajiIndex) => {
+            document.getElementById(`candidateCost${gajiIndex + 1}-${kandidatIndex}`).value = gaji;
+        });
+    });
 }
 
+initializeForm();
+let treeArray = [];
+let id = 0;
+let dataminlb = 0;
+let dataminid = 0;
+let theResult = null;
+branchbound(datasetPekerja);
+branchboundFull(datasetPekerja);
+console.log(theResult);
+renderView(treeArray, dataminlb, dataminid);
+function handleSubmit(event) {
+    event.preventDefault();
+    treeArray = [];
+    id = 0;
+    dataminlb = 0;
+    dataminid = 0;
+    theResult = null;
+    const formData = new FormData(event.target);
+    const newDataPekerja = [];
+
+
+    for (let i = 1; i <= 5; i++) {
+        const nama = formData.get(`candidateName-${i}`);
+        const estimasiGaji = [];
+        for (let j = 1; j <= 5; j++) {
+            estimasiGaji.push(parseInt(formData.get(`candidateCost${j}-${i}`)));
+        }
+        newDataPekerja.push({ nama: nama, cost: estimasiGaji });
+    }
+
+
+    datasetPekerja = newDataPekerja;
+    branchbound(datasetPekerja);
+    branchboundFull(datasetPekerja);
+    renderView(treeArray, dataminlb, dataminid);
+
+    const { minCost, allAssignments } = findMinimumCostAssignment();
+    renderTable(allAssignments, minCost);
+    
+    console.log("Dataset Pekerja updated:", datasetPekerja);
+    console.log(treeArray);
+}
+function next() {
+    branchboundNext(datasetPekerja);
+    renderView(treeArray, dataminlb, dataminid);
+    console.log(treeArray);
+
+}
+function resetData() {
+    treeArray = [];
+    id = 0;
+    branchbound(datasetPekerja);
+    renderView(treeArray, dataminlb, dataminid);
+}
 /**
  * @param {Array} dataset - Parameter berisi dataset yang diolah.
  */
 function branchbound(dataset) {
     const firstLb = lbCalulate(dataset)
     treeArray.push({ id, children: null, level: 0, address: [], fixValue: [], ...firstLb })
+    dataminid = id
+    dataminlb = firstLb.lb
 }
+/**
+ * @param {Array} dataset - Parameter berisi dataset yang diolah.
+ */
 function branchboundNext(dataset) {
     let leafData = [];
     getLeaf(treeArray, leafData);
@@ -45,21 +104,62 @@ function branchboundNext(dataset) {
     // console.log(minLeaf, "inLeaf");
     const levelElement = minLeaf.level + 1
     const address = minLeaf.address
-    if(levelElement<=dataset.length){
+    if (levelElement <= dataset.length) {
         for (let index2 = 0; index2 < dataset.length; index2++) {
             // console.log("index2 = ", index2);
-            const lb = lbCalulate(dataset, index2, address, minLeaf.fixValue, true)
+            const lb = lbCalulate(dataset, index2, address, index2, true)
             // console.log(lb);
             if (!minLeaf.children) {
                 minLeaf.children = []
             }
+            dataminid = minLeaf.id
+            dataminlb = minLeaf.lb
             let addressElement = [...address, index2]
             if (lb) {
                 minLeaf.children.push({ id: ++id, ...lb, children: null, level: levelElement, address: addressElement })
+                if (levelElement == dataset.length) {
+                    theResult = { id: ++id, ...lb, children: null, level: levelElement, address: addressElement }
+                    console.log("theres", theResult);
+                }
             }
         }
     }
 }
+function branchboundFull(dataset) {
+    let leafData = [];
+    getLeaf(treeArray, leafData);
+    let minLeaf = getMinLbForAll(leafData);
+    // console.log(minLeaf, "inLeaf");
+    const levelElement = minLeaf.level + 1
+    const address = minLeaf.address
+    if (levelElement <= dataset.length) {
+        for (let index2 = 0; index2 < dataset.length; index2++) {
+            // console.log("index2 = ", index2);
+            const lb = lbCalulate(dataset, index2, address, index2, true)
+            // console.log(lb);
+            if (!minLeaf.children) {
+                minLeaf.children = []
+            }
+            dataminid = minLeaf.id
+            dataminlb = minLeaf.lb
+            let addressElement = [...address, index2]
+            if (lb) {
+                minLeaf.children.push({ id: ++id, ...lb, children: null, level: levelElement, address: addressElement })
+                if (levelElement == dataset.length) {
+                    theResult = { id: ++id, ...lb, children: null, level: levelElement, address: addressElement }
+                    for (let index = 0; index < dataset.length; index++) {
+                        document.getElementById("res" + (index + 1)).innerHTML = dataset[theResult.address.indexOf(index)].nama
+                        document.getElementById("cost" + (index + 1)).innerHTML = theResult.lbSource[theResult.address.indexOf(index)]
+                        document.getElementById("total-cost").innerHTML = theResult.lb
+                    }
+                }
+            }
+        }
+        branchboundFull(dataset);
+    }
+}
+
+
 
 /**
  * @param {Array} dataset - Parameter berisi dataset yang diolah.
@@ -77,7 +177,6 @@ function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
             lbSource.push(minValue);
             lb += minValue;
         } else {
-            let data = element
             const level = address.length
             minValue = null
             element.cost.forEach((el, idx) => {
@@ -104,7 +203,7 @@ function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
             lb += minValue;
         }
     });
-    if(lbSource.includes(null)){
+    if (lbSource.includes(null)) {
         return null;
     }
     const lbObject = { lbSource, lb }
@@ -133,7 +232,7 @@ function getMinLbForAll(data) {
             minlb = element
         } else if (minlb.lb > element.lb) {
             minlb = element
-        }else if (minlb.lb == element.lb && minlb.level<element.level) {
+        } else if (minlb.lb == element.lb && minlb.level < element.level) {
             minlb = element
         }
     });
@@ -147,7 +246,7 @@ function createHierarchyElement(node) {
 
     const parentDiv = document.createElement('div');
     parentDiv.classList.add('hv-item-parent');
-    parentDiv.innerHTML = `<p class="simple-card">LB=${node.lb}</p>`;
+    parentDiv.innerHTML = `<p class="simple-card"> ${node.id} <br> LB=${node.lb} </p>`;
     itemDiv.appendChild(parentDiv);
 
     if (node.children && node.children.length > 0) {
@@ -164,12 +263,22 @@ function createHierarchyElement(node) {
 
         itemDiv.appendChild(childrenDiv);
     }
+    if (node.level == datasetPekerja.length) {
+        document.getElementById('min-id').innerHTML = node.id + " <b>Ini adalah data hasil</b>";
+        document.getElementById('min-lb').innerHTML = node.lb;
+        parentDiv.classList.add('finish-item');
+    }
+    if (node.children == null) {
+        parentDiv.classList.add('no-tail');
+    }
 
     return itemDiv;
 }
 
-function renderView(dataset) {
+function renderView(dataset, minlb, minid) {
+    document.getElementById('min-id').innerHTML = minid;
+    document.getElementById('min-lb').innerHTML = minlb;
     const mainParent = document.getElementById('mainParent');
-    mainParent.innerHTML = ''; 
+    mainParent.innerHTML = '';
     mainParent.appendChild(createHierarchyElement(dataset[0]));
 }

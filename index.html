@@ -2,81 +2,575 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Branch & Tree</title>
-    <link rel="stylesheet" href="tree.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>CostCal</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="tree.css">
+  <!-- =======================================================
+  * Template Name: CostCal
+  * Template URL: https://bootstrapmade.com/CostCal-bootstrap-startup-website-template/
+  * Updated: Jun 06 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<body>
-    <button onclick="next()">NEXT</button>
-    <div class="hv-container">
-        <div class="hv-wrapper">
+<body class="index-page">
 
-            <!-- Key component -->
-            <div id="mainParent" class="hv-item">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-                <div class="hv-item-parent">
-                    <p class="simple-card">
-                        LB=0
-                    </p>
-                </div>
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/logo.png" alt="">
+        <h1 class="sitename">CostCal</h1>
+      </a>
 
-                <div class="hv-item-children">
+      <nav id="navmenu" class="navmenu">
+        <ul>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
 
-                    <div class="hv-item-child">
-                        <!-- Key component -->
-                        <div class="hv-item">
 
-                            <div class="hv-item-parent">
-                                <p class="simple-card"> Parent </p>
-                            </div>
+    </div>
+  </header>
 
-                            <div class="hv-item-children">
+  <main class="main">
 
-                                <div class="hv-item-child">
-                                    <p class="simple-card"> Child 1 </p>
-                                </div>
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="hero-bg">
+        <img src="assets/img/hero-bg-light.webp" alt="">
+      </div>
+      <div class="container text-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <h1 data-aos="fade-up">Welcome to <span>CostCal</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Kalkulasikan pilihan terbaik untuk mendapatkan cost terendah untuk
+            karyawan<br></p>
 
-                                <div class="hv-item-child">
-                                    <p class="simple-card"> Child 3 </p>
-                                </div>
-                                <div class="hv-item-child">
-                                    <p class="simple-card"> Child 5 </p>
-                                </div>
+          <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out"
+            data-aos-delay="300">
+        </div>
+      </div>
 
-                                <div class="hv-item-child">
-                                    <p class="simple-card"> Child 2 </p>
-                                </div>
+    </section><!-- /Hero Section -->
 
-                                <div class="hv-item-child">
-                                    <p class="simple-card"> Child 2 </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="hv-item-child">
-                        <p class="simple-card"> Child 2 </p>
-                    </div>
-
-                    <div class="hv-item-child">
-                        <p class="simple-card"> Child 3 </p>
-                    </div>
-
-                </div>
-
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section">
+      <div class="container">
+        <div class="col-lg-6 content aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+          <h3>Masukan Data Kandidat</h3>
+        </div>
+        <form  onsubmit="handleSubmit(event)">
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <h4>Kandidat 1</h4>
+            </div>
+            <div class="col-md-2">
+              <label for="candidateName-1" class="">Nama Kandidat</label>
+              <input required type="text" class="form-control" id="candidateName-1" name="candidateName-1"
+                placeholder="Masukan Nama">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost1-1" class="">Estimasi Gaji Jabatan 1</label>
+              <input required type="number" class="form-control" id="candidateCost1-1" name="candidateCost1-1"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost2-1" class="">Estimasi Gaji Jabatan 2</label>
+              <input required type="number" class="form-control" id="candidateCost2-1" name="candidateCost2-1"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost3-1" class="">Estimasi Gaji Jabatan 3</label>
+              <input required type="number" class="form-control" id="candidateCost3-1" name="candidateCost3-1"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost4-1" class="">Estimasi Gaji Jabatan 4</label>
+              <input required type="number" class="form-control" id="candidateCost4-1" name="candidateCost4-1"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost5-1" class="">Estimasi Gaji Jabatan 5</label>
+              <input required type="number" class="form-control" id="candidateCost5-1" name="candidateCost5-1"
+                placeholder="Estimasi Gaji">
             </div>
 
+          </div>
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <h4>Kandidat 2</h4>
+            </div>
+            <div class="col-md-2">
+              <label for="candidateName-2" class="">Nama Kandidat</label>
+              <input required type="text" class="form-control" id="candidateName-2" name="candidateName-2"
+                placeholder="Masukan Nama">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost1-2" class="">Estimasi Gaji Jabatan 1</label>
+              <input required type="number" class="form-control" id="candidateCost1-2" name="candidateCost1-2"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost2-2" class="">Estimasi Gaji Jabatan 2</label>
+              <input required type="number" class="form-control" id="candidateCost2-2" name="candidateCost2-2"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost3-2" class="">Estimasi Gaji Jabatan 3</label>
+              <input required type="number" class="form-control" id="candidateCost3-2" name="candidateCost3-2"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost4-2" class="">Estimasi Gaji Jabatan 4</label>
+              <input required type="number" class="form-control" id="candidateCost4-2" name="candidateCost4-2"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost5-2" class="">Estimasi Gaji Jabatan 5</label>
+              <input required type="number" class="form-control" id="candidateCost5-2" name="candidateCost5-2"
+                placeholder="Estimasi Gaji">
+            </div>
+          </div>
+
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <h4>Kandidat 3</h4>
+            </div>
+            <div class="col-md-2">
+              <label for="candidateName-3" class="">Nama Kandidat</label>
+              <input required type="text" class="form-control" id="candidateName-3" name="candidateName-3"
+                placeholder="Masukan Nama">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost1-3" class="">Estimasi Gaji Jabatan 1</label>
+              <input required type="number" class="form-control" id="candidateCost1-3" name="candidateCost1-3"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost2-3" class="">Estimasi Gaji Jabatan 2</label>
+              <input required type="number" class="form-control" id="candidateCost2-3" name="candidateCost2-3"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost3-3" class="">Estimasi Gaji Jabatan 3</label>
+              <input required type="number" class="form-control" id="candidateCost3-3" name="candidateCost3-3"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost4-3" class="">Estimasi Gaji Jabatan 4</label>
+              <input required type="number" class="form-control" id="candidateCost4-3" name="candidateCost4-3"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost5-3" class="">Estimasi Gaji Jabatan 5</label>
+              <input required type="number" class="form-control" id="candidateCost5-3" name="candidateCost5-3"
+                placeholder="Estimasi Gaji">
+            </div>
+          </div>
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <h4>Kandidat 4</h4>
+            </div>
+            <div class="col-md-2">
+              <label for="candidateName-4" class="">Nama Kandidat</label>
+              <input required type="text" class="form-control" id="candidateName-4" name="candidateName-4"
+                placeholder="Masukan Nama">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost1-4" class="">Estimasi Gaji Jabatan 1</label>
+              <input required type="number" class="form-control" id="candidateCost1-4" name="candidateCost1-4"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost2-4" class="">Estimasi Gaji Jabatan 2</label>
+              <input required type="number" class="form-control" id="candidateCost2-4" name="candidateCost2-4"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost3-4" class="">Estimasi Gaji Jabatan 3</label>
+              <input required type="number" class="form-control" id="candidateCost3-4" name="candidateCost3-4"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost4-4" class="">Estimasi Gaji Jabatan 4</label>
+              <input required type="number" class="form-control" id="candidateCost4-4" name="candidateCost4-4"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost5-4" class="">Estimasi Gaji Jabatan 5</label>
+              <input required type="number" class="form-control" id="candidateCost5-4" name="candidateCost5-4"
+                placeholder="Estimasi Gaji">
+            </div>
+          </div>
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <h4>Kandidat 5</h4>
+            </div>
+            <div class="col-md-2">
+              <label for="candidateName-5" class="">Nama Kandidat</label>
+              <input required type="text" class="form-control" id="candidateName-5" name="candidateName-5"
+                placeholder="Masukan Nama">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost1-5" class="">Estimasi Gaji Jabatan 1</label>
+              <input required type="number" class="form-control" id="candidateCost1-5" name="candidateCost1-5"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost2-5" class="">Estimasi Gaji Jabatan 2</label>
+              <input required type="number" class="form-control" id="candidateCost2-5" name="candidateCost2-5"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost3-5" class="">Estimasi Gaji Jabatan 3</label>
+              <input required type="number" class="form-control" id="candidateCost3-5" name="candidateCost3-5"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost4-5" class="">Estimasi Gaji Jabatan 4</label>
+              <input required type="number" class="form-control" id="candidateCost4-5" name="candidateCost4-5"
+                placeholder="Estimasi Gaji">
+            </div>
+            <div class="col-md-2">
+              <label for="candidateCost5-5" class="">Estimasi Gaji Jabatan 5</label>
+              <input required type="number" class="form-control" id="candidateCost5-5" name="candidateCost5-5"
+                placeholder="Estimasi Gaji">
+            </div>
+          </div>
+          <div class="row bg-white px-2 py-3 mb-3 rounded">
+            <div class="col-12">
+              <button type="submit" class="btn btn-success w-100">SUBMIT</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+      </div>
+
+    </section><!-- /Featured Services Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+        <h1>Hasil Terbaik</h1>
+        <div class="row">
+          <div class="col-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Jabatan 1</th>
+                  <th scope="col">Jabatan 2</th>
+                  <th scope="col">Jabatan 3</th>
+                  <th scope="col">Jabatan 4</th>
+                  <th scope="col">Jabatan 5</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="res1">Nama</td>
+                  <td id="res2">Nama</td>
+                  <td id="res3">Nama</td>
+                  <td id="res4">Nama</td>
+                  <td id="res5">Nama</td>
+                </tr>
+                <tr>
+                  <td id="cost1">Nama</td>
+                  <td id="cost2">Nama</td>
+                  <td id="cost3">Nama</td>
+                  <td id="cost4">Nama</td>
+                  <td id="cost5">Nama</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 my-3">
+            <h1 id="total-cost"></h1>
+          </div>
         </div>
+      </div>
+      <div class="container my-5">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#branchBoundModal">
+          Penjelasan Dengan Branch & Bound
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="branchBoundModal" tabindex="-1" aria-labelledby="branchBoundModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" style="--bs-modal-width: 90% !important;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="branchBoundModalLabel">Branch & Bound</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="overflow-auto">
+                  <button class="btn btn-primary" onclick="next()">NEXT</button>
+                  <button class="btn btn-primary" onclick="resetData()">RESET</button>
+                  <div class="alert alert-info" role="alert">
+                    LB terkecil adalah <span id="min-lb"></span> pada leaf ke <span id="min-id"></span>
+                  </div>
+                  <div class="hv-container">
+                    <div class="hv-wrapper">
+
+                      <div id="mainParent" class="hv-item">
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <h3>Algoritma Branch Bound:</h3>
+                  <pre class="bg-dark text-white">
+                    function branchbound(dataset) {
+                      const firstLb = lbCalulate(dataset)
+                      treeArray.push({ id, children: null, level: 0, address: [], fixValue: [], ...firstLb })
+                  }
+                  function branchboundNext(dataset) {
+                      let leafData = [];
+                      getLeaf(treeArray, leafData);
+                      let minLeaf = getMinLbForAll(leafData);
+                      // console.log(minLeaf, "inLeaf");
+                      const levelElement = minLeaf.level + 1
+                      const address = minLeaf.address
+                      if (levelElement <= dataset.length) {
+                          for (let index2 = 0; index2 < dataset.length; index2++) {
+                              // console.log("index2 = ", index2);
+                              const lb = lbCalulate(dataset, index2, address, index2, true)
+                              // console.log(lb);
+                              if (!minLeaf.children) {
+                                  minLeaf.children = []
+                              }
+                              let addressElement = [...address, index2]
+                              if (lb) {
+                                  minLeaf.children.push({ id: ++id, ...lb, children: null, level: levelElement, address: addressElement })
+                              }
+                          }
+                      }
+                  }
+                  function getLeaf(dataset, output) {
+                    dataset.forEach(element => {
+                        if (element.children) {
+                            getLeaf(element.children, output)
+                        } else {
+                            output.push(element)
+                        }
+                    });
+                }
+                
+                function getMinLbForAll(data) {
+                    let minlb = null;
+                    data.forEach(element => {
+                        if (!minlb) {
+                            minlb = element
+                        } else if (minlb.lb > element.lb) {
+                            minlb = element
+                        } else if (minlb.lb == element.lb && minlb.level < element.level) {
+                            minlb = element
+                        }
+                    });
+                    return minlb;
+                }
+                                  
+                  </pre>
+                  <h3>Algoritma menghitung LB:</h3>
+                  <pre class="bg-dark text-white">
+                    function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
+                      if (address) {
+                          if (address[0] == 2) {
+                              console.log("masok address 2", fixValueIndex);
+                          }
+                      }
+                      let lb = 0
+                      let lbSource = []
+                      dataset.forEach((element, index) => {
+                          if (indexValue === null) {
+                              const minValue = Math.min(...element.cost)
+                              lbSource.push(minValue);
+                              lb += minValue;
+                          } else {
+                              const level = address.length
+                              minValue = null
+                              element.cost.forEach((el, idx) => {
+                                  if (index == level) {
+                                      if (idx == indexValue && !address.includes(idx)) {
+                                          minValue = el
+                                      }
+                                  } else if (index < level) {
+                                      if (idx == address[index]) {
+                                          minValue = el
+                                      }
+                                  } else {
+                                      if (!address.includes(idx) && idx != fixValueIndex) {
+                                          if (!minValue) {
+                                              minValue = el
+                                          } else if (minValue > el) {
+                                              minValue = el
+                                          }
+                                      }
+                  
+                                  }
+                              });
+                              lbSource.push(minValue);
+                              lb += minValue;
+                          }
+                      });
+                      if (lbSource.includes(null)) {
+                          return null;
+                      }
+                      const lbObject = { lbSource, lb }
+                      return lbObject
+                  }
+                  
+                  </pre>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container my-5">
+        <h1>Tabel Brute Force</h1>
+        <table id="table-bruteforce" class="table table-bordered">
+          <thead>
+              <tr>
+                  <th>Pekerja Jabatan 1</th>
+                  <th>Pekerja Jabatan 2</th>
+                  <th>Pekerja Jabatan 3</th>
+                  <th>Pekerja Jabatan 4</th>
+                  <th>Pekerja Jabatan 5</th>
+                  <th>Total Cost</th>
+              </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>
+      </div>
+    </section><!-- /About Section -->
+
+
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">CostCal</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+
+      </div>
     </div>
 
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">CostCal</strong><span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="branchbound.js"></script>
+  <script src="bruteforce.js"></script>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
-    integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="branchbound.js"></script>
 
 </html>
