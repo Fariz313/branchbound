@@ -282,3 +282,5 @@ function renderView(dataset, minlb, minid) {
     mainParent.innerHTML = '';
     mainParent.appendChild(createHierarchyElement(dataset[0]));
 }
+
+
