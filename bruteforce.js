@@ -54,8 +54,11 @@ function renderTable(allAssignments, minCost) {
     const tableBody = document.getElementById('table-bruteforce').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = '';
 
-    allAssignments.forEach(assignment => {
+    allAssignments.forEach((assignment, index) => {
         const row = document.createElement('tr');
+        const indexCell = document.createElement('td');
+        indexCell.textContent = ++index;
+        row.appendChild(indexCell);
         assignment.pekerja.forEach(pekerja => {
             const cell = document.createElement('td');
             cell.textContent = pekerja;
@@ -63,6 +66,9 @@ function renderTable(allAssignments, minCost) {
         });
         const cellCost = document.createElement('td');
         cellCost.textContent = assignment.cost;
+        if (assignment.cost == minCost) {
+            row.setAttribute('class', 'table-success');
+        }
         row.appendChild(cellCost);
         tableBody.appendChild(row);
     });
@@ -70,7 +76,7 @@ function renderTable(allAssignments, minCost) {
     const row = document.createElement('tr');
     const cellTotal = document.createElement('td');
     cellTotal.textContent = 'Total Minimum Cost';
-    cellTotal.colSpan = 5;
+    cellTotal.colSpan = 6;
     const cellTotalCost = document.createElement('td');
     cellTotalCost.textContent = minCost;
 

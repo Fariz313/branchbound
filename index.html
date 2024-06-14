@@ -84,7 +84,7 @@
         <div class="col-lg-6 content aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
           <h3>Masukan Data Kandidat</h3>
         </div>
-        <form  onsubmit="handleSubmit(event)">
+        <form onsubmit="handleSubmit(event)">
           <div class="row bg-white px-2 py-3 mb-3 rounded">
             <div class="col-12">
               <h4>Kandidat 1</h4>
@@ -320,7 +320,9 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#branchBoundModal">
           Penjelasan Dengan Branch & Bound
         </button>
-
+        <h1>Hasil Terbaik Dengan Backtracking</h1>
+        <h2 id="backtrackingResult"></h2>
+        <h2 id="backtrackingCombination"></h2>
         <!-- Modal -->
         <div class="modal fade" id="branchBoundModal" tabindex="-1" aria-labelledby="branchBoundModalLabel"
           aria-hidden="true">
@@ -464,18 +466,18 @@
         <h1>Tabel Brute Force</h1>
         <table id="table-bruteforce" class="table table-bordered">
           <thead>
-              <tr>
-                  <th>Pekerja Jabatan 1</th>
-                  <th>Pekerja Jabatan 2</th>
-                  <th>Pekerja Jabatan 3</th>
-                  <th>Pekerja Jabatan 4</th>
-                  <th>Pekerja Jabatan 5</th>
-                  <th>Total Cost</th>
-              </tr>
+            <tr>
+              <th>Pekerja Jabatan 1</th>
+              <th>Pekerja Jabatan 2</th>
+              <th>Pekerja Jabatan 3</th>
+              <th>Pekerja Jabatan 4</th>
+              <th>Pekerja Jabatan 5</th>
+              <th>Total Cost</th>
+            </tr>
           </thead>
           <tbody>
           </tbody>
-      </table>
+        </table>
       </div>
     </section><!-- /About Section -->
 
@@ -571,6 +573,7 @@
   <script src="assets/js/main.js"></script>
   <script src="branchbound.js"></script>
   <script src="bruteforce.js"></script>
+  <script src="backtracking.js"></script>
 </body>
 
 </html>

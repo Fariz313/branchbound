@@ -1,4 +1,3 @@
-
 let datasetPekerja = [
     {
         "nama": "budi",
@@ -21,6 +20,25 @@ let datasetPekerja = [
         "cost": [8000, 4000, 7000, 5000, 10000]
     }
 ];
+// let datasetPekerja = [
+//     {
+//         "nama": "budi",
+//         "cost": [5000, 10000, 1000, 2000]
+//     },
+//     {
+//         "nama": "siti",
+//         "cost": [7000, 2000, 4000, 15000]
+//     },
+//     {
+//         "nama": "joko",
+//         "cost": [3000, 5000, 12000, 7000]
+//     },
+//     {
+//         "nama": "lisa",
+//         "cost": [9000, 6000, 3000, 11000]
+//     }
+// ];
+let jumlahCost = 5;
 function initializeForm() {
     datasetPekerja.forEach((kandidat, index) => {
         const kandidatIndex = index + 1;
@@ -37,7 +55,7 @@ let id = 0;
 let dataminlb = 0;
 let dataminid = 0;
 let theResult = null;
-branchbound(datasetPekerja);
+treeInit(datasetPekerja);
 branchboundFull(datasetPekerja);
 console.log(theResult);
 renderView(treeArray, dataminlb, dataminid);
@@ -63,13 +81,13 @@ function handleSubmit(event) {
 
 
     datasetPekerja = newDataPekerja;
-    branchbound(datasetPekerja);
+    treeInit(datasetPekerja);
     branchboundFull(datasetPekerja);
     renderView(treeArray, dataminlb, dataminid);
 
     const { minCost, allAssignments } = findMinimumCostAssignment();
     renderTable(allAssignments, minCost);
-    
+
     console.log("Dataset Pekerja updated:", datasetPekerja);
     console.log(treeArray);
 }
@@ -82,14 +100,14 @@ function next() {
 function resetData() {
     treeArray = [];
     id = 0;
-    branchbound(datasetPekerja);
+    treeInit(datasetPekerja);
     renderView(treeArray, dataminlb, dataminid);
 }
 /**
  * @param {Array} dataset - Parameter berisi dataset yang diolah.
  */
-function branchbound(dataset) {
-    const firstLb = lbCalulate(dataset)
+function treeInit(dataset) {
+    const firstLb = lbCalculate(dataset)
     treeArray.push({ id, children: null, level: 0, address: [], fixValue: [], ...firstLb })
     dataminid = id
     dataminlb = firstLb.lb
@@ -107,7 +125,7 @@ function branchboundNext(dataset) {
     if (levelElement <= dataset.length) {
         for (let index2 = 0; index2 < dataset.length; index2++) {
             // console.log("index2 = ", index2);
-            const lb = lbCalulate(dataset, index2, address, index2, true)
+            const lb = lbCalculate(dataset, index2, address, true)
             // console.log(lb);
             if (!minLeaf.children) {
                 minLeaf.children = []
@@ -135,7 +153,7 @@ function branchboundFull(dataset) {
     if (levelElement <= dataset.length) {
         for (let index2 = 0; index2 < dataset.length; index2++) {
             // console.log("index2 = ", index2);
-            const lb = lbCalulate(dataset, index2, address, index2, true)
+            const lb = lbCalculate(dataset, index2, address, true)
             // console.log(lb);
             if (!minLeaf.children) {
                 minLeaf.children = []
@@ -159,16 +177,13 @@ function branchboundFull(dataset) {
     }
 }
 
-
-
 /**
  * @param {Array} dataset - Parameter berisi dataset yang diolah.
  * @param {int} indexValue - Parameter berisi nilai index dari value yang akan dimasukan.
  * @param {Array} address - Parameter array alamat index dari tree.
- * @param {Array} fixValueIndex - Parameter nilai fix yang ada di parentnya.
  * @param {Boolean} debug - Parameter nilai untuk debug.
  */
-function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
+function lbCalculate(dataset, indexValue = null, address, debug) {
     let lb = 0
     let lbSource = []
     dataset.forEach((element, index) => {
@@ -189,7 +204,7 @@ function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
                         minValue = el
                     }
                 } else {
-                    if (!address.includes(idx) && idx != fixValueIndex) {
+                    if (!address.includes(idx) && idx != indexValue) {
                         if (!minValue) {
                             minValue = el
                         } else if (minValue > el) {
@@ -213,7 +228,6 @@ function lbCalulate(dataset, indexValue = null, address, fixValueIndex, debug) {
 /**
  * @param {Array} dataset - Parameter berisi dataset yang diolah.
  * @param {Array} output - Parameter output akan mendapat setiap leaf paling ujung.
-
  */
 function getLeaf(dataset, output) {
     dataset.forEach(element => {
@@ -246,7 +260,11 @@ function createHierarchyElement(node) {
 
     const parentDiv = document.createElement('div');
     parentDiv.classList.add('hv-item-parent');
-    parentDiv.innerHTML = `<p class="simple-card"> ${node.id} <br> LB=${node.lb} </p>`;
+    let addressView = []
+    node.address.forEach(element => {
+        addressView.push(element + 1)
+    });
+    parentDiv.innerHTML = `<p class="simple-card"> ${node.id} <br> <span>Jabatan= ${addressView}<span> <br> LB=${node.lb} </p>`;
     itemDiv.appendChild(parentDiv);
 
     if (node.children && node.children.length > 0) {
@@ -282,5 +300,4 @@ function renderView(dataset, minlb, minid) {
     mainParent.innerHTML = '';
     mainParent.appendChild(createHierarchyElement(dataset[0]));
 }
-
 
